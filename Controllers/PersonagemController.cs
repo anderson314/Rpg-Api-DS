@@ -4,6 +4,8 @@ using RpgApi.Models;
 using System.Linq;
 using RpgApi.Models.Enuns;
 using RpgApi.Data;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace RpgApi.Controllers
 {
@@ -29,9 +31,9 @@ namespace RpgApi.Controllers
         //Listar todos os personagens
 
         [HttpGet("GetAll")]
-        public IActionResult Get()
+        public async Task<IActionResult> GetAsync()
         {
-            List<Personagem> personagens = _context.Personagens.ToList();
+            List<Personagem> personagens = await _context.Personagens.ToListAsync();
             return Ok(personagens);
         }
 
@@ -47,9 +49,9 @@ namespace RpgApi.Controllers
         
         //filtrar personagem pela ID
         [HttpGet("{id}")]
-        public IActionResult GetSingle (int id)
+        public async Task<IActionResult> GetSingleAsync (int id)
         {
-            Personagem p = _context.Personagens.FirstOrDefault(apelido => apelido.Id == id);
+            Personagem p = await _context.Personagens.FirstOrDefaultAsync(apelido => apelido.Id == id);
             return Ok(p); //pegar um personagem onde 'apelido.id' seja igual ao 'id'
         
         }
@@ -80,35 +82,35 @@ namespace RpgApi.Controllers
 
         //Adicionar personagem na lista
         [HttpPost]
-        public IActionResult AddPersonagens(Personagem novoPersonagem)
+        public async Task<IActionResult> AddPersonagensAsync(Personagem novoPersonagem)
         {
             if(novoPersonagem.Forca > 100)
                 return BadRequest("Cara, vc não pode adicionar um personagem com força maior a 100.");
 
-            _context.Personagens.Add(novoPersonagem);
-            _context.SaveChanges();
-            List<Personagem> personagens = _context.Personagens.ToList();
+            await _context.Personagens.AddAsync(novoPersonagem);
+            await _context.SaveChangesAsync();
+            List<Personagem> personagens = await _context.Personagens.ToListAsync();
             return Ok(personagens);
         }
 
         //Atualizar um personagem existente
         [HttpPut]
-        public IActionResult UpdatePersonagem(Personagem p)
+        public async Task<IActionResult> UpdatePersonagemAsync(Personagem p)
         {
             _context.Personagens.Update(p);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return Ok(personagens);
         }
 
         //Deletar personagem pela ID
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> DeleteAsync(int id)
         {
-            Personagem pRemover = _context.Personagens.FirstOrDefault(p => p.Id == id);
+            Personagem pRemover = await _context.Personagens.FirstOrDefaultAsync(p => p.Id == id);
             _context.Personagens.Remove(pRemover);
-            _context.SaveChanges();
-            List<Personagem> personagems = _context.Personagens.ToList();
+            await _context.SaveChangesAsync();
+            List<Personagem> personagems = await _context.Personagens.ToListAsync();
 
             return Ok(personagens);
         }
