@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using RpgApi.Models;
 using System.Linq;
 using RpgApi.Models.Enuns;
-
+using RpgApi.Data;
 
 namespace RpgApi.Controllers
 {
@@ -13,14 +13,10 @@ namespace RpgApi.Controllers
     {
        // private Personagem p = new Personagem();
 
-        //Lista de números
-        List<int> nomeListaNumerosInteiros = new List<int>();
-
-        List<Personagem> listaPersonagens = new List<Personagem>();
 
         //Lista de objetos da Classe Personagem
         private static List<Personagem> personagens = new List<Personagem> {
-            new Personagem() {Id = 1,}, //Frodo Cavaleiro
+            new Personagem() { Id = 1,}, //Frodo Cavaleiro
             new Personagem() { Id = 2, Nome= "Sam", PontosVida = 100, Forca = 15, Defesa = 25, Inteligencia = 30, Classe = ClasseEnum.Cavaleiro },
             new Personagem() { Id = 3, Nome= "Galadriel", PontosVida = 100, Forca = 18, Defesa = 21, Inteligencia = 35, Classe = ClasseEnum.Clerigo },
             new Personagem() { Id = 4, Nome= "Gandalf", PontosVida = 100, Forca = 19, Defesa = 18, Inteligencia = 37, Classe = ClasseEnum.Mago },
@@ -29,9 +25,13 @@ namespace RpgApi.Controllers
             new Personagem() { Id = 7, Nome= "Radgast", PontosVida = 100, Forca = 25, Defesa = 11, Inteligencia = 35, Classe = ClasseEnum.Mago },  
         };
 
+
+        //Listar todos os personagens
+
         [HttpGet("GetAll")]
         public IActionResult Get()
         {
+            List<Personagem> personagens = _context.Personagens.ToList();
             return Ok(personagens);
         }
 
@@ -49,8 +49,8 @@ namespace RpgApi.Controllers
         [HttpGet("{id}")]
         public IActionResult GetSingle (int id)
         {
-
-            return Ok(personagens.FirstOrDefault(apelido => apelido.Id == id)); //pegar um personagem onde 'apelido.id' seja igual ao 'id'
+            Personagem p = _context.Personagens.FirstOrDefault(apelido => apelido.Id == id);
+            return Ok(p); //pegar um personagem onde 'apelido.id' seja igual ao 'id'
         
         }
         
@@ -65,7 +65,7 @@ namespace RpgApi.Controllers
         
         }
         */
-
+        /*
         //Remover um personagem pelo Id
         [HttpGet("RemoverById/{id}")]
         public IActionResult Remover(int id)
@@ -76,42 +76,50 @@ namespace RpgApi.Controllers
 
             return Ok(personagens);
         }
-        
+        */
 
         //Adicionar personagem na lista
         [HttpPost]
         public IActionResult AddPersonagens(Personagem novoPersonagem)
         {
             if(novoPersonagem.Forca > 100)
-                return NotFound("Cara, vc não pode adicionar um personagem com força maior a 100.");
+                return BadRequest("Cara, vc não pode adicionar um personagem com força maior a 100.");
 
-            personagens.Add(novoPersonagem);
+            _context.Personagens.Add(novoPersonagem);
+            _context.SaveChanges();
+            List<Personagem> personagens = _context.Personagens.ToList();
             return Ok(personagens);
         }
 
-
+        //Atualizar um personagem existente
         [HttpPut]
         public IActionResult UpdatePersonagem(Personagem p)
         {
-            Personagem personagemAlterado = personagens.Find(pers => pers.Id == p.Id);
-            personagemAlterado.Nome = p.Nome;
-            personagemAlterado.PontosVida = p.PontosVida;
-            personagemAlterado.Forca = p.Forca;
-            personagemAlterado.Defesa = p.Defesa;
-            personagemAlterado.Inteligencia = p.Inteligencia;
-            personagemAlterado.Classe = p.Classe;
+            _context.Personagens.Update(p);
+            _context.SaveChanges();
 
             return Ok(personagens);
         }
 
-
+        //Deletar personagem pela ID
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            personagens.RemoveAll(pers => pers.Id == id);
+            Personagem pRemover = _context.Personagens.FirstOrDefault(p => p.Id == id);
+            _context.Personagens.Remove(pRemover);
+            _context.SaveChanges();
+            List<Personagem> personagems = _context.Personagens.ToList();
 
             return Ok(personagens);
         }
+
+        private readonly DataContext _context;
+    
+        public PersonagemController(DataContext context)
+        {
+            _context = context;
+        }
+
     }
 }
 
