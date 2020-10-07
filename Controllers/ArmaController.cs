@@ -10,7 +10,7 @@ namespace RpgApi.Controllers
         private Arma a = new Arma();
                 
         public IActionResult Get()
-        {
+        { 
             return Ok(a);
         }
 
