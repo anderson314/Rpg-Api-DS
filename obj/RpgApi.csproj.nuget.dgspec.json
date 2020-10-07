@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ander\\Desktop\\Curso Des. Sis\\2° Modulo\\Desenvolvimento de Sistemas\\Projeto RpgAPi\\RpgApi\\RpgApi.csproj": {}
+    "C:\\Users\\ander\\Desktop\\Curso Des. Sis\\2° Modulo\\Desenvolvimento de Sistemas\\Projeto RpgAPi\\RpgApi - Deploy Resolvido\\RpgApi\\RpgApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ander\\Desktop\\Curso Des. Sis\\2° Modulo\\Desenvolvimento de Sistemas\\Projeto RpgAPi\\RpgApi\\RpgApi.csproj": {
+    "C:\\Users\\ander\\Desktop\\Curso Des. Sis\\2° Modulo\\Desenvolvimento de Sistemas\\Projeto RpgAPi\\RpgApi - Deploy Resolvido\\RpgApi\\RpgApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ander\\Desktop\\Curso Des. Sis\\2° Modulo\\Desenvolvimento de Sistemas\\Projeto RpgAPi\\RpgApi\\RpgApi.csproj",
+        "projectUniqueName": "C:\\Users\\ander\\Desktop\\Curso Des. Sis\\2° Modulo\\Desenvolvimento de Sistemas\\Projeto RpgAPi\\RpgApi - Deploy Resolvido\\RpgApi\\RpgApi.csproj",
         "projectName": "RpgApi",
-        "projectPath": "C:\\Users\\ander\\Desktop\\Curso Des. Sis\\2° Modulo\\Desenvolvimento de Sistemas\\Projeto RpgAPi\\RpgApi\\RpgApi.csproj",
+        "projectPath": "C:\\Users\\ander\\Desktop\\Curso Des. Sis\\2° Modulo\\Desenvolvimento de Sistemas\\Projeto RpgAPi\\RpgApi - Deploy Resolvido\\RpgApi\\RpgApi.csproj",
         "packagesPath": "C:\\Users\\ander\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ander\\Desktop\\Curso Des. Sis\\2° Modulo\\Desenvolvimento de Sistemas\\Projeto RpgAPi\\RpgApi\\obj\\",
+        "outputPath": "C:\\Users\\ander\\Desktop\\Curso Des. Sis\\2° Modulo\\Desenvolvimento de Sistemas\\Projeto RpgAPi\\RpgApi - Deploy Resolvido\\RpgApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ander\\AppData\\Roaming\\NuGet\\NuGet.Config"

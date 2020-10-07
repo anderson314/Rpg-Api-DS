@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "x9j4e9lswBZm8o/8WYV+GXefIDmMUmfPrTFbK3XJppddF2s5uwVlyBm7V+rLZ3IWD8BVL/CEj5Je0RAbfJ2iUw==",
+  "dgSpecHash": "RlU9tmSSiW4wC8E6sIe7luW/igohVdswWOZZy76o4eVrarCOn1OCZ9BlQr+y7Ei/Yqpfl5pCT/oTX+5NqxJWcA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\ander\\Desktop\\Curso Des. Sis\\2° Modulo\\Desenvolvimento de Sistemas\\Projeto RpgAPi\\RpgApi\\RpgApi.csproj",
+  "projectFilePath": "C:\\Users\\ander\\Desktop\\Curso Des. Sis\\2° Modulo\\Desenvolvimento de Sistemas\\Projeto RpgAPi\\RpgApi - Deploy Resolvido\\RpgApi\\RpgApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ander\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "C:\\Users\\ander\\.nuget\\packages\\microsoft.bcl.hashcode\\1.1.0\\microsoft.bcl.hashcode.1.1.0.nupkg.sha512",
