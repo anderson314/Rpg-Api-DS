@@ -1,4 +1,4 @@
-namespace RpgApi.Controllers
+namespace RpgApi.Models
 {
     public class Usuario
     {
