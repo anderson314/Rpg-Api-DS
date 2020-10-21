@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RpgApi.Models
 {
@@ -8,6 +9,10 @@ namespace RpgApi.Models
         public string Username { get; set;}
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
+
+        [NotMapped]
+        public string PasswordString { get; set; }
         public List<Personagem> Personagens { get; set; }
+ 
     }
 }
