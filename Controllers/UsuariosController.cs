@@ -51,6 +51,48 @@ namespace RpgApi.Controllers
         }
 
 
+        //Método para autenticar o usuário
+        private bool VerificarPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
+        {
+            using(var hmac = new System.Security.Cryptography.HMACSHA512(passwordSalt))
+            {   
+                var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+                for(int i=0; i < computedHash.Length; i++)
+                {
+                    if(computedHash[i] != passwordHash[i])
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+
+        //Método responsável por Autenticar o login
+        [HttpPost("Autenticar")]
+        public async Task<IActionResult> AutenticarUsuario(Usuario credenciaisUsuario)
+        {
+
+            Usuario usuario = await _context.Usuarios.FirstOrDefaultAsync(x =>
+                x.Username.ToLower().Equals(credenciaisUsuario.Username.ToLower()));
+
+            if(usuario ==null)
+            {
+                return BadRequest("Usuário não encontrado.");
+            }
+            else if (!VerificarPasswordHash(credenciaisUsuario.PasswordString,
+                                usuario.PasswordHash, usuario.PasswordSalt))
+            {
+                return BadRequest("Senha incorreta.");
+            }
+            else
+            {
+                return Ok(usuario.Id);
+            }
+        }
+
+
+
         private readonly DataContext _context;
         public UsuariosController(DataContext context)
         {
