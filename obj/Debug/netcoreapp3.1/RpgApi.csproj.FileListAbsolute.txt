@@ -150,3 +150,4 @@ C:\Users\ander\Desktop\Curso Des. Sis\2° Modulo\Desenvolvimento de Sistemas\Pro
 C:\Users\ander\Desktop\Curso Des. Sis\2° Modulo\Desenvolvimento de Sistemas\Projeto RpgAPi\RpgApi - Deploy Resolvido\RpgApi\obj\Debug\netcoreapp3.1\RpgApi.dll
 C:\Users\ander\Desktop\Curso Des. Sis\2° Modulo\Desenvolvimento de Sistemas\Projeto RpgAPi\RpgApi - Deploy Resolvido\RpgApi\obj\Debug\netcoreapp3.1\RpgApi.pdb
 C:\Users\ander\Desktop\Curso Des. Sis\2° Modulo\Desenvolvimento de Sistemas\Projeto RpgAPi\RpgApi - Deploy Resolvido\RpgApi\obj\Debug\netcoreapp3.1\RpgApi.genruntimeconfig.cache
+C:\Users\ander\Desktop\Curso Des. Sis\2° Modulo\Desenvolvimento de Sistemas\Projeto RpgAPi\RpgApi\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll

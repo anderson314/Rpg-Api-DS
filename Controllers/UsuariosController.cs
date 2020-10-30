@@ -1,8 +1,15 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using RpgApi.Data;
 using RpgApi.Models;
+using System.Collections.Generic;
+using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using System.IdentityModel.Tokens.Jwt;
+using System;
 
 namespace RpgApi.Controllers
 {
@@ -87,16 +94,44 @@ namespace RpgApi.Controllers
             }
             else
             {
-                return Ok(usuario.Id);
+                return Ok(CriarToken(usuario));
             }
         }
 
+        //Método responsável por criar o token
+        private string CriarToken(Usuario usuario)
+        {
+            List<Claim> claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString()),
+                new Claim(ClaimTypes.Name, usuario.Username)
+            };
+
+            SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes
+            (_configuration.GetSection("AppSettings:Token").Value));
+
+            SigningCredentials creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+
+            SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(claims),
+                Expires = DateTime.Now.AddDays(1),
+                SigningCredentials = creds
+            };
+
+            JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+            SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
+
+            return tokenHandler.WriteToken(token);
+        }
 
 
         private readonly DataContext _context;
-        public UsuariosController(DataContext context)
+        private readonly IConfiguration _configuration;
+        public UsuariosController(DataContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
     }
 }
