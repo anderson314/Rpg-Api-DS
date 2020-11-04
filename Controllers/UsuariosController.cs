@@ -10,9 +10,12 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.IdentityModel.Tokens.Jwt;
 using System;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace RpgApi.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class UsuariosController : ControllerBase
@@ -75,7 +78,10 @@ namespace RpgApi.Controllers
             }
         }
 
+        
         //Método responsável por Autenticar o login
+        [AllowAnonymous]/*Esse atributo concede uma exceção para que um usuário anônimo, consiga acessar o método contido
+                        numa controller restrita. */
         [HttpPost("Autenticar")]
         public async Task<IActionResult> AutenticarUsuario(Usuario credenciaisUsuario)
         {

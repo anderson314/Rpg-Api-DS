@@ -6,9 +6,12 @@ using RpgApi.Models.Enuns;
 using RpgApi.Data;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace RpgApi.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class PersonagemController : ControllerBase
@@ -28,8 +31,17 @@ namespace RpgApi.Controllers
         };
 
 
-        //Listar todos os personagens
+        [HttpGet("GetByUser")]
+        public async Task<IActionResult> GetByUserAsync()
+        {
+            int id = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
 
+            List<Personagem> personagens = await _context.Personagens.Where(c => c.Usuario.Id == id).ToListAsync();
+            return Ok(personagens); 
+        }
+
+
+        //Listar todos os personagens
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAsync()
         {
