@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 
 namespace RpgApi.Controllers
 {
@@ -99,6 +100,9 @@ namespace RpgApi.Controllers
             if(novoPersonagem.Forca > 100)
                 return BadRequest("Cara, vc não pode adicionar um personagem com força maior a 100.");
 
+            novoPersonagem.Usuario = await _context.Usuarios.FirstOrDefaultAsync(uBusca => uBusca.Id == ObterUsuarioId());
+
+
             await _context.Personagens.AddAsync(novoPersonagem);
             await _context.SaveChangesAsync();
             List<Personagem> personagens = await _context.Personagens.ToListAsync();
@@ -109,6 +113,9 @@ namespace RpgApi.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdatePersonagemAsync(Personagem p)
         {
+            //salvar id do personagem
+            p.Usuario = await _context.Usuarios.FirstOrDefaultAsync(uBusca => uBusca.Id == ObterUsuarioId());
+
             _context.Personagens.Update(p);
             await _context.SaveChangesAsync();
 
@@ -127,11 +134,20 @@ namespace RpgApi.Controllers
             return Ok(personagens);
         }
 
+        private int ObterUsuarioId()
+        {
+            return int.Parse(_httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+        }
+
         private readonly DataContext _context;
+
+        private readonly  IHttpContextAccessor _httpContextAccessor;
     
-        public PersonagemController(DataContext context)
+        public PersonagemController(DataContext context, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
+
+            _httpContextAccessor = httpContextAccessor;
         }
 
     }
