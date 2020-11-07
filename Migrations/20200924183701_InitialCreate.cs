@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿/*using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RpgApi.Migrations
 {
@@ -32,3 +32,4 @@ namespace RpgApi.Migrations
         }
     }
 }
+*/

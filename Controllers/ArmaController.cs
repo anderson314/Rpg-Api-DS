@@ -1,5 +1,9 @@
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RpgApi.Data;
@@ -7,6 +11,7 @@ using RpgApi.Models;
 
 namespace RpgApi.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class ArmaController : ControllerBase
@@ -49,11 +54,19 @@ namespace RpgApi.Controllers
         [HttpPost]
         public async Task<IActionResult> AddArmaAsync(Arma novaArma)
         {
-            
+            //Buscar personagem de acordo com a claim do token
+            Personagem personagem = await _context.Personagens
+                .FirstOrDefaultAsync(p => p.Id == novaArma.PersonagemId && 
+                p.Usuario.Id == ObterUsuarioId());
+
+            //Se não achar ninguém com o Id correspondente
+            if(personagem == null)
+                return BadRequest("Seu usuário não contém personagens com o Id do personagem informado");
+
             await _context.Armas.AddAsync(novaArma);
             await _context.SaveChangesAsync();
 
-            List<Arma> armas = await _context.Armas.ToListAsync();
+            List<Arma> armas = await _context.Armas.Where(a => a.PersonagemId == novaArma.PersonagemId).ToListAsync();
 
             return Ok(armas);
         }
@@ -85,10 +98,16 @@ namespace RpgApi.Controllers
         } 
 
         private readonly DataContext _context;
-
-        public ArmaController(DataContext context)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public ArmaController(DataContext context, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
+            _httpContextAccessor = httpContextAccessor;
+        }
+
+        private int ObterUsuarioId()
+        {
+            return int.Parse(_httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
         }
     
 }
