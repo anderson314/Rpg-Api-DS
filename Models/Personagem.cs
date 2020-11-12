@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using RpgApi.Models.Enuns;
 
@@ -16,6 +17,7 @@ namespace RpgApi.Models
         public Usuario Usuario { get; set; }
         [JsonIgnore]
         public Arma Arma { get; set; }
+        public List<PersonagemHabilidade> PersonagemHabilidades { get; set; }
     }
 }
 

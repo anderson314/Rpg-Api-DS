@@ -16,6 +16,7 @@ using  Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Options;
 
 namespace RpgApi
 {
@@ -46,6 +47,9 @@ namespace RpgApi
                     ValidateAudience = false
                 };
             });
+            
+            services.AddControllers().AddNewtonsoftJson(options =>
+            options.SerializerSettings.ReferenceLoopHandling=Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
@@ -69,5 +73,6 @@ namespace RpgApi
                 endpoints.MapControllers();
             });
         }
+ 
     }
 }

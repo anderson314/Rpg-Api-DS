@@ -64,7 +64,13 @@ namespace RpgApi.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetSingleAsync (int id)
         {
-            Personagem p = await _context.Personagens.FirstOrDefaultAsync(apelido => apelido.Id == id);
+            Personagem p = await _context.Personagens
+            .Include(p => p.Arma)
+            .Include(p => p.Usuario)
+            .Include(p => p.PersonagemHabilidades).ThenInclude(ps => ps.Habilidade)
+            .FirstOrDefaultAsync(p => p.Id == id &&
+                p.Usuario.Id == ObterUsuarioId());
+            //FirstOrDefaultAsync(apelido => apelido.Id == id);
             return Ok(p); //pegar um personagem onde 'apelido.id' seja igual ao 'id'
         
         }

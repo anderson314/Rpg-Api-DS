@@ -13,5 +13,12 @@ namespace RpgApi.Data
         public DbSet<Personagem> Personagens { get; set; }
         public DbSet<Arma> Armas { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Habilidade> Habilidades { get; set; }
+        public DbSet<PersonagemHabilidade> PersonagemHabilidades { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<PersonagemHabilidade>()
+                .HasKey(ph => new { ph.PersonagemId });
+        }
     }
 }
