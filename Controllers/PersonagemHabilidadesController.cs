@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -73,7 +74,7 @@ namespace RpgApi.Controllers
             .Include(p => p.Personagem)
             .Include(p => p.Habilidade)
             .Where(p => p.Personagem.Usuario.Id == ObterUsuarioId()
-                    && p.Personagem.Id == Personagem.Id).ToListAsync();
+                    && p.Personagem.Id == personagemId).ToListAsync();
             
             return Ok(phLista);
         }
@@ -82,7 +83,7 @@ namespace RpgApi.Controllers
         [HttpGet("GetHabilidades")]
         public async Task<IActionResult> GetHabilidades()
         {
-            List<Habilidade> habilidades = new List<habilidade>();
+            List<Habilidade> habilidades = new List<Habilidade>();
 
             habilidades = await _context.Habilidades.ToListAsync();
 
