@@ -19,6 +19,9 @@ namespace RpgApi.Data
         {
             modelBuilder.Entity<PersonagemHabilidade>()
                 .HasKey(ph => new { ph.PersonagemId });
+
+            modelBuilder.Entity<Usuario>()
+                .Property(u => u.Perfil).HasDefaultValue("Jogador");
         }
     }
 }

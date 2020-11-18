@@ -63,6 +63,32 @@ namespace RpgApi.Controllers
             return Ok("Dados removidos com sucesso.");
         }
 
+        //Pegar habilidades de um personagem de acordo com usuario
+        [HttpGet("{personagemId}")]
+        public async Task<IActionResult> GetHabilidadesPersonagem(int personagemId)
+        {
+            List<PersonagemHabilidade> phLista = new List<PersonagemHabilidade>();
+        
+            phLista = await _context.PersonagemHabilidades
+            .Include(p => p.Personagem)
+            .Include(p => p.Habilidade)
+            .Where(p => p.Personagem.Usuario.Id == ObterUsuarioId()
+                    && p.Personagem.Id == Personagem.Id).ToListAsync();
+            
+            return Ok(phLista);
+        }
+
+        //Lista todas as habilidades
+        [HttpGet("GetHabilidades")]
+        public async Task<IActionResult> GetHabilidades()
+        {
+            List<Habilidade> habilidades = new List<habilidade>();
+
+            habilidades = await _context.Habilidades.ToListAsync();
+
+            return Ok(habilidades);
+        }
+
 
         private int ObterUsuarioId()
         {

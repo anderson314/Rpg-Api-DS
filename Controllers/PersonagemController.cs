@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace RpgApi.Controllers
 {
-    [Authorize]
+    [Authorize(Roles="Jogador, Admin")]
     [ApiController]
     [Route("[controller]")]
     public class PersonagemController : ControllerBase
@@ -46,7 +46,18 @@ namespace RpgApi.Controllers
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAsync()
         {
-            List<Personagem> personagens = await _context.Personagens.ToListAsync();
+            List<Personagem> personagens = new List<Personagem>();
+
+            if(ObterUsuarioPerfil() == "Admin")
+            {
+                personagens = await _context.Personagens.ToListAsync();
+            }
+            else
+            {
+                personagens = await _context.Personagens.Where(p => p.Usuario.Id == ObterUsuarioId()).ToListAsync();
+            }
+
+            
             return Ok(personagens);
         }
 
@@ -139,6 +150,14 @@ namespace RpgApi.Controllers
 
             return Ok(personagens);
         }
+
+
+        //Obter Role da claim para verificar se é Admin ou Jogador
+        private string ObterUsuarioPerfil()
+        {
+            return _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Role);
+        }
+
 
         private int ObterUsuarioId()
         {
