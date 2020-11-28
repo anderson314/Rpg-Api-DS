@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -96,6 +97,16 @@ namespace RpgApi.Controllers
 
             return Ok(armas);
         } 
+
+
+        [HttpGet("Sorteio")]
+        public IActionResult Sorteio()
+        {
+            int numero = new Random().Next(10);
+
+            return Ok(numero);
+        }
+
 
         private readonly DataContext _context;
         private readonly IHttpContextAccessor _httpContextAccessor;
