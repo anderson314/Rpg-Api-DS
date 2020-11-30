@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace RpgApi.Models
 {
     public class Disputa
@@ -6,5 +8,7 @@ namespace RpgApi.Models
         public int OponenteId { get; set; }
         public string Narracao { get; set; }
         public int HabilidadeId { get; set; }
+        public List<int> ListaIdPersonagens { get; set; }
+        public List<string> Resultados { get; set; } = new List<string>();
     }
 }

@@ -121,5 +121,5 @@ namespace RpgApi.Controllers
             return int.Parse(_httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
         }
     
-}
+    }
 }
